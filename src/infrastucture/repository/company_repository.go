@@ -8,6 +8,7 @@ import (
 	locationTypes "github.com/flexuxs/clubHubApp/src/domain/location/model"
 	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 	infra_services "github.com/flexuxs/clubHubApp/src/infrastucture/services"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -70,6 +71,29 @@ func (c *CompanyRepository) saveLocation(ctx context.Context, location *location
 	return insertedID, nil
 }
 
-func (c *CompanyRepository) Update(ctx context.Context, company *model.CompanyAggregate) error {
+func (c *CompanyRepository) Update(ctx context.Context, company *infra_model.CompanyModel) error {
+	companyCollection := c.MongoClient.Client.Database(c.Config.Mongo.Database).Collection(c.Config.Mongo.CompanyCollection)
+
+	// Check if company exists by querying for the company ID
+	filter := bson.M{"_id": company.Id}
+	foundCompany := &infra_model.CompanyModel{}
+	err := companyCollection.FindOne(ctx, filter).Decode(foundCompany)
+	if err != nil {
+		return err
+	}
+
+	// Update the company
+	update := bson.M{
+		"$set": bson.M{
+			"franchises":  company.Franchises,
+			"owner":       company.Owner,
+			"informacion": company.Information,
+		},
+	}
+	_, err = companyCollection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/flexuxs/clubHubApp/src/domain/company/model"
 	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func (cf *CompanyFinder) GetCompanyByFilter(ctx context.Context, filterRequest *model.Filterrequest) ([]infra_model.CompanyModel, error) {
@@ -50,4 +51,28 @@ func (cf *CompanyFinder) GetCompanyByFilter(ctx context.Context, filterRequest *
 	}
 
 	return companies, nil
+}
+
+func (cf *CompanyFinder) GetCompanyById(ctx context.Context, id string) (*infra_model.CompanyModel, error) {
+	collection, err := cf.MongoClient.Client.Database(cf.Config.Mongo.Database).Collection(cf.Config.Mongo.CompanyCollection).Clone()
+	if err != nil {
+		return nil, err
+	}
+
+	filter := bson.M{}
+
+	filter["id"] = id
+
+	companyFound := &infra_model.CompanyModel{}
+
+	err = collection.FindOne(context.Background(), filter).Decode(&companyFound)
+	if err != nil && err != mongo.ErrNoDocuments {
+		return nil, err
+	}
+
+	if err == mongo.ErrNoDocuments {
+		return nil, nil
+	}
+
+	return companyFound, nil
 }
