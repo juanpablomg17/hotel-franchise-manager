@@ -8,6 +8,8 @@ import (
 
 	"github.com/flexuxs/clubHubApp/src/api/routes"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/fx"
 )
 
@@ -19,6 +21,7 @@ func RegisterRoutes(engine *gin.Engine, companyRouteHandler *routes.CompanyRoute
 	engine.POST("api/v1/company", companyRouteHandler.SaveCompany)
 	engine.GET("api/v1/company", companyRouteHandler.GetCompany)
 	engine.PUT("api/v1/company/:id", companyRouteHandler.UpdateCompany)
+	engine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 }
 

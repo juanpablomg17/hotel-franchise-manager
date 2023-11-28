@@ -22,6 +22,13 @@ func NewController(companyUseCases companyInterfaces.ICompanyUseCase) *Controlle
 	}
 }
 
+// @Summary Save a new company
+// @Description SaveCompany saves a new company using the provided DTO.
+// @Accept json
+// @Produce json
+// @Param company body dto.CompanyDTO true "Company data"
+// @Success 200 {object} utils.GenericCommandResponse
+// @Router /company [post]
 func (c *Controller) SaveCompany(company *dto.CompanyDTO) *utils.GenericCommandResponse {
 
 	companyAggregate := mapper.FromCompanyDtoToCompanyAggregate(company)
@@ -31,6 +38,14 @@ func (c *Controller) SaveCompany(company *dto.CompanyDTO) *utils.GenericCommandR
 	return response
 }
 
+// @Summary Get company by filter
+// @Description GetCompanyByfilter retrieves companies based on the provided filter.
+// @Accept json
+// @Produce json
+// @Param companyFilter query dto.CompanyFilterDTO true "Filter criteria"
+// @Success 200 {object} utils.GetCompaniesResponse
+// @Failure 500 {object} error
+// @Router /company [get]
 func (c *Controller) GetCompanyByfilter(companyFilter *dto.CompanyFilterDTO) (*utils.GetCompaniesResponse, error) {
 
 	getCompantRquest := &model.Filterrequest{}
@@ -45,6 +60,14 @@ func (c *Controller) GetCompanyByfilter(companyFilter *dto.CompanyFilterDTO) (*u
 	return response, nil
 }
 
+// @Summary Update company
+// @Description UpdateCompany updates an existing company using the provided model.
+// @Accept json
+// @Produce json
+// @Param id path string true "Company ID"
+// @Param company body infra_model.CompanyModel true "Updated company data"
+// @Success 200 {object} utils.GenericCommandResponse
+// @Router /company/{id} [put]
 func (c *Controller) UpdateCompany(companyDto *infra_model.CompanyModel) *utils.GenericCommandResponse {
 
 	response := c.CompanyUseCases.UpdateCompany(context.Background(), companyDto)

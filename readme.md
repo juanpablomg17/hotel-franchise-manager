@@ -1,47 +1,48 @@
-# Prueba técnica ClubHub - Backend
+# ClubHub Technical Test - Backend
 
-Este proyecto es una solución para la administración de franquicias hoteleras en ClubHub, construido utilizando Golang y siguiendo diversas metodologías y tecnologías. A continuación se detallan las características principales de la implementación:
+This project is a solution for hotel franchise management in ClubHub, built using Golang and following various methodologies and technologies. Below are the main features of the implementation:
 
-## Tecnologías utilizadas
+## Technologies Used
 
-- **Gin**: Se utilizó Gin como el framework web para construir el API REST.
-- **Arquitectura hexagonal**: Se implementó una arquitectura hexagonal para separar las responsabilidades y facilitar el mantenimiento y escalabilidad del código.
-- **Enfoque de DDD**: Se siguió una aproximación basada en el dominio utilizando el Diseño Dirigido por el Dominio (DDD) para modelar el sistema.
-- **Programación concurrente**: Se aplicó programación concurrente para mejorar la eficiencia y capacidad de respuesta del sistema.
-- **Lógica de reintentos**: Se implementó lógica de reintentos para manejar posibles errores de integración con librerías y llamadas a API externas.
-- **MongoDB**: Se utilizó MongoDB como el motor de base de datos NoSQL.
+- **Gin**: Gin was used as the web framework to build the REST API.
+- **Hexagonal Architecture**: A hexagonal architecture was implemented to separate responsibilities and facilitate code maintenance and scalability.
+- **Domain-Driven Design (DDD) Approach**: A domain-driven design approach was followed to model the system.
+- **Concurrent Programming**: Concurrent programming was applied to improve efficiency and responsiveness of the system.
+- **Retry Logic**: Retry logic was implemented to handle potential integration errors with libraries and external API calls.
+- **MongoDB**: MongoDB was used as the NoSQL database engine.
 
+## Running the Project
 
-## Levantar el proyecto
+To run the project, follow the steps below:
 
-Para levantar el proyecto, sigue los siguientes pasos:
+1. Clone the repository from GitHub.
 
-1. Clona el repositorio desde GitHub.
+2. Make sure you have Docker and Docker Compose installed on your machine.
 
-2. Asegúrate de tener Docker y Docker Compose instalados en tu máquina.
+3. Navigate to the root directory of the project.
 
-3. Navega hasta el directorio raíz del proyecto.
-
-4. Ejecuta el siguiente comando en la terminal para construir y levantar los contenedores de Docker:
+4. Run the following command in the terminal to build and start the Docker containers:
 
    ```
    docker-compose up -d --build
    ```
 
-   Esto creará y ejecutará los contenedores de Docker necesarios para ejecutar la aplicación.
+   This will create and run the necessary Docker containers to execute the application.
 
-5. Una vez que los contenedores estén en funcionamiento, podrás acceder al API REST en `http://localhost:8080`. Puedes probar los diferentes endpoints utilizando una herramienta como Postman.
+5. Once the containers are up and running, you can access the REST API at `http://localhost:8080`. You can test the different endpoints using a tool like Postman.
 
-## Diagrama de arquitectura y flujo de la solución
+## Architecture Diagram and Solution Flow
 
-A continuación se muestra un diagrama de la arquitectura y el flujo de la solución:
+The following diagram illustrates the architecture and flow of the solution:
 
-![Diagrama de arquitectura](architecture_diagram.png)
+![Architecture Diagram](architecture_diagram.png)
 
-El API REST construido con Gin recibe las solicitudes del cliente y las dirige al controlador correspondiente. El controlador interactúa con los servicios de aplicación, que implementan la lógica de negocio y realizan operaciones en los repositorios de datos. Los repositorios se comunican con la capa de persistencia, que está compuesta por una base de datos SQL o NoSQL, según se haya elegido.
+The REST API built with Gin receives client requests and directs them to the corresponding controller. The controller interacts with the application services, which implement the business logic and perform operations on the data repositories. The repositories communicate with the persistence layer, which consists of a SQL or NoSQL database, depending on the choice.
 
+## Consuming Endpoints
 
+To facilitate the visualization and testing of the endpoints, Swagger UI has been integrated into the application. Once the application is up and running, you can access the API documentation at `http://localhost:8080/docs/index.html`.
 
+Here is a preview of how Swagger UI looks:
 
-
-
+![Swagger UI](https://i.ibb.co/pwcLbz1/Screenshot-1.jpg)

@@ -72,6 +72,7 @@ require (
 	github.com/spf13/viper v1.17.0 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/swaggo/files v1.0.1 // indirect
 	github.com/swaggo/gin-swagger v1.6.0 // indirect
 	github.com/swaggo/swag v1.16.2 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect

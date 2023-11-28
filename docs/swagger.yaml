@@ -1,0 +1,219 @@
+basePath: /api
+definitions:
+  dto.CompanyDTO:
+    properties:
+      company:
+        properties:
+          franchises:
+            items:
+              properties:
+                location:
+                  properties:
+                    Address:
+                      type: string
+                    Country:
+                      type: string
+                    city:
+                      type: string
+                    zip_code:
+                      type: string
+                  type: object
+                name:
+                  type: string
+                url:
+                  type: string
+              type: object
+            type: array
+          informacion:
+            properties:
+              location:
+                properties:
+                  address:
+                    type: string
+                  city:
+                    type: string
+                  country:
+                    type: string
+                  zip_code:
+                    type: string
+                type: object
+              name:
+                type: string
+              tax_number:
+                type: string
+            type: object
+          owner:
+            properties:
+              contact:
+                properties:
+                  email:
+                    type: string
+                  location:
+                    properties:
+                      address:
+                        type: string
+                      city:
+                        type: string
+                      country:
+                        type: string
+                      zip_code:
+                        type: string
+                    type: object
+                  phone:
+                    type: string
+                type: object
+              first_name:
+                type: string
+              last_name:
+                type: string
+            type: object
+        type: object
+    type: object
+  infra_model.CompanyModel:
+    properties:
+      franchises:
+        items:
+          $ref: '#/definitions/infra_model.Franchise'
+        type: array
+      id:
+        type: string
+      informacion:
+        $ref: '#/definitions/infra_model.Information'
+      owner:
+        $ref: '#/definitions/infra_model.Owner'
+    type: object
+  infra_model.Contact:
+    properties:
+      email:
+        type: string
+      locationId:
+        type: string
+      phone:
+        type: string
+    type: object
+  infra_model.Franchise:
+    properties:
+      locationId:
+        type: string
+      name:
+        type: string
+      url:
+        type: string
+    type: object
+  infra_model.Information:
+    properties:
+      locationId:
+        type: string
+      name:
+        type: string
+      tax_number:
+        type: string
+    type: object
+  infra_model.Owner:
+    properties:
+      contact:
+        $ref: '#/definitions/infra_model.Contact'
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  utils.GenericCommandResponse:
+    properties:
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  utils.GetCompaniesResponse:
+    properties:
+      companies:
+        items:
+          $ref: '#/definitions/infra_model.CompanyModel'
+        type: array
+      message:
+        type: string
+      status_code:
+        type: integer
+    type: object
+host: localhost:8888
+info:
+  contact: {}
+  description: Hoteld app for club management
+  title: ClubHub API
+  version: "1.0"
+paths:
+  /company:
+    get:
+      consumes:
+      - application/json
+      description: GetCompanyByfilter retrieves companies based on the provided filter.
+      parameters:
+      - in: query
+        name: companyId
+        type: string
+      - in: query
+        name: companyName
+        type: string
+      - in: query
+        name: franchiseName
+        type: string
+      - in: query
+        name: ownerName
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.GetCompaniesResponse'
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: Get company by filter
+    post:
+      consumes:
+      - application/json
+      description: SaveCompany saves a new company using the provided DTO.
+      parameters:
+      - description: Company data
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CompanyDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.GenericCommandResponse'
+      summary: Save a new company
+  /company/{id}:
+    put:
+      consumes:
+      - application/json
+      description: UpdateCompany updates an existing company using the provided model.
+      parameters:
+      - description: Company ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated company data
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/infra_model.CompanyModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.GenericCommandResponse'
+      summary: Update company
+swagger: "2.0"

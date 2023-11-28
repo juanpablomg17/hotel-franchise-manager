@@ -7,9 +7,17 @@ import (
 	"os/signal"
 	"syscall"
 
+	_ "github.com/flexuxs/clubHubApp/docs"
+
 	"github.com/flexuxs/clubHubApp/src/api/fxmodule"
 )
 
+// @title ClubHub API
+// @version	1.0
+// @description Hoteld app for club management
+
+// @host 	localhost:8888
+// @BasePath /api
 func main() {
 	app := fxmodule.NewApp()
 

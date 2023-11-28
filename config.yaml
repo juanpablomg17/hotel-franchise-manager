@@ -1,5 +1,8 @@
 mongo:
-  connectionString: mongodb://root:admin@mongodb:27017/
+## work with local mongodb
+  connectionString: mongodb://root:admin@localhost:27017/
+## work with docker
+  # connectionString: mongodb://root:admin@mongodb:27017/
   database: hoteldb
   companyCollection: companies
   locationCollection: locations
