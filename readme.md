@@ -1,4 +1,4 @@
-# ClubHub Technical Test - Backend
+# HotelApi - Backend
 
 This project is a solution for hotel franchise management in ClubHub, built using Golang and following various methodologies and technologies. Below are the main features of the implementation:
 
