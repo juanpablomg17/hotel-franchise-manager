@@ -33,3 +33,25 @@ func (cr *CompanyRoutes) SaveCompany(c *gin.Context) {
 		"company": company,
 	})
 }
+
+func (cr *CompanyRoutes) GetCompany(c *gin.Context) {
+
+	getCompanyDto := &dto.CompanyFilterDTO{}
+
+	if err := c.ShouldBind(&getCompanyDto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	response, err := cr.Controller.GetCompanyByfilter(getCompanyDto)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(response.StatusCode, gin.H{
+		"message":   response.Message,
+		"companies": response.Companies,
+	})
+}

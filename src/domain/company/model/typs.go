@@ -1,8 +1,8 @@
 package model
 
 type Filterrequest struct {
-	FranchiseName string `json:"franchise_name"`
-	CompanyName   string `json:"company_name"`
-	CompanyId     string `json:"company_id"`
-	OwnerName     string `json:"owner_name"`
+	CompanyId      string `form:"companyId"`
+	FranchiseName  string `json:"franchiseName"`
+	CompanyName    string `json:"companyName"`
+	OwnerFirstName string `json:"ownerName"`
 }
