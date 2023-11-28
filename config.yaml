@@ -1,0 +1,7 @@
+mongo:
+  connectionString: mongodb://root:admin@localhost:27017/hoteldb?retryWrites=true&w=majority
+  database: hoteldb
+  companyCollection: companies
+  locationCollection: locations
+
+
