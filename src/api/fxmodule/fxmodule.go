@@ -8,6 +8,7 @@ import (
 	"github.com/flexuxs/clubHubApp/src/api/routes"
 	companyApplication "github.com/flexuxs/clubHubApp/src/application/usecase/company"
 	"github.com/flexuxs/clubHubApp/src/infrastucture/finder"
+	infra_providers "github.com/flexuxs/clubHubApp/src/infrastucture/providers/network"
 	"github.com/flexuxs/clubHubApp/src/infrastucture/repository"
 	"go.uber.org/fx"
 )
@@ -21,6 +22,7 @@ func NewApp() *fx.App {
 		fx.Provide(client_mongo.NewHotelMongoClient),
 		fx.Provide(repository.NewCompanyRepository),
 		fx.Provide(finder.NewCompanyFinder),
+		fx.Provide(infra_providers.NewSiteInfoFetcher),
 
 		// application
 		fx.Provide(companyApplication.NewCompanyUseCases),
