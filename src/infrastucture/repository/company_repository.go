@@ -75,12 +75,7 @@ func (c *CompanyRepository) Update(ctx context.Context, company *infra_model.Com
 	companyCollection := c.MongoClient.Client.Database(c.Config.Mongo.Database).Collection(c.Config.Mongo.CompanyCollection)
 
 	// Check if company exists by querying for the company ID
-	filter := bson.M{"_id": company.Id}
-	foundCompany := &infra_model.CompanyModel{}
-	err := companyCollection.FindOne(ctx, filter).Decode(foundCompany)
-	if err != nil {
-		return err
-	}
+	filter := bson.M{"id": company.Id}
 
 	// Update the company
 	update := bson.M{
@@ -90,7 +85,7 @@ func (c *CompanyRepository) Update(ctx context.Context, company *infra_model.Com
 			"informacion": company.Information,
 		},
 	}
-	_, err = companyCollection.UpdateOne(ctx, filter, update)
+	_, err := companyCollection.UpdateOne(ctx, filter, update)
 	if err != nil {
 		return err
 	}
