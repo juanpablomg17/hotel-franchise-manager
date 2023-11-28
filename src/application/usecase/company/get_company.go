@@ -2,6 +2,7 @@ package company
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/flexuxs/clubHubApp/src/domain/company/model"
@@ -15,6 +16,7 @@ func (cu *CompanyUseCases) GetCompany(ctx context.Context, filterRequest *model.
 	companies, err := cu.CompanyFinder.GetCompanyByFilter(ctx, filterRequest)
 
 	if err != nil {
+		fmt.Println("holasss", err)
 		response.StatusCode = http.StatusInternalServerError
 		response.Message = "Error getting companies"
 		return response

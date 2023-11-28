@@ -17,7 +17,7 @@ func NewHotelMongoClient(config *config.Configuration) *HotelMongoClient {
 
 	// mongodb://root:admin@localhost:27017/?directConnection=true&authMechanism=DEFAULT
 
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://root:admin@localhost:27017/hoteldb?ssl=false&authSource=admin"))
+	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(config.Mongo.ConnectionString))
 	if err != nil {
 		log.Print("Error connecting to MongoDB!!!!!!!!!!!")
 		log.Fatal(err)

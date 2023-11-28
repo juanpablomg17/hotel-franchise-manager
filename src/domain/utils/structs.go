@@ -29,7 +29,7 @@ func StructToMap(src any) (map[string]interface{}, error) {
 	return target, nil
 }
 
-func PrintStructInfoWithoutZeroValues[T interface{}](obj T) string {
+func PrintStructInfoWithoutZeroValues[T any](obj T) string {
 	str := "["
 	objetctMap, _ := StructToMap(obj)
 

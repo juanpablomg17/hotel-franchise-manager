@@ -1,7 +1,6 @@
 version: '3.8'
-
 services:
-  app:
+  application:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,8 +8,11 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
-    links:
-      - mongodb
+    networks:
+      - my_network
+    environment:
+      MONGO_HOST: mongodb  
+      MONGO_PORT: 27017
 
   mongodb:
     image: mongo:5.0
@@ -19,3 +21,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
