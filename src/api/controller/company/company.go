@@ -8,6 +8,7 @@ import (
 	companyInterfaces "github.com/flexuxs/clubHubApp/src/domain/company/interface"
 	"github.com/flexuxs/clubHubApp/src/domain/company/model"
 	"github.com/flexuxs/clubHubApp/src/domain/utils"
+	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 )
 
 type Controller struct {
@@ -42,4 +43,11 @@ func (c *Controller) GetCompanyByfilter(companyFilter *dto.CompanyFilterDTO) (*u
 	response := c.CompanyUseCases.GetCompany(context.Background(), getCompantRquest)
 
 	return response, nil
+}
+
+func (c *Controller) UpdateCompany(companyDto *infra_model.CompanyModel) *utils.GenericCommandResponse {
+
+	response := c.CompanyUseCases.UpdateCompany(context.Background(), companyDto)
+
+	return response
 }

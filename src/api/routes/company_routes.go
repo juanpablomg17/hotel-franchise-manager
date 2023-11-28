@@ -5,6 +5,7 @@ import (
 
 	controller "github.com/flexuxs/clubHubApp/src/api/controller/company"
 	dto "github.com/flexuxs/clubHubApp/src/api/dto/company"
+	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 	"github.com/gin-gonic/gin"
 )
 
@@ -53,5 +54,29 @@ func (cr *CompanyRoutes) GetCompany(c *gin.Context) {
 	c.JSON(response.StatusCode, gin.H{
 		"message":   response.Message,
 		"companies": response.Companies,
+	})
+}
+
+func (cr *CompanyRoutes) UpdateCompany(c *gin.Context) {
+	companyIDParam := c.Param("id")
+
+	if companyIDParam == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Company ID is required"})
+		return
+	}
+
+	companyDto := &infra_model.CompanyModel{}
+
+	if err := c.ShouldBindJSON(&companyDto); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error in some attributes": err.Error()})
+		return
+	}
+
+	companyDto.Id = companyIDParam
+
+	response := cr.Controller.UpdateCompany(companyDto)
+
+	c.JSON(response.StatusCode, gin.H{
+		"message": response.Message,
 	})
 }

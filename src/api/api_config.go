@@ -18,6 +18,8 @@ func NewGinEngine() *gin.Engine {
 func RegisterRoutes(engine *gin.Engine, companyRouteHandler *routes.CompanyRoutes) {
 	engine.POST("api/v1/company", companyRouteHandler.SaveCompany)
 	engine.GET("api/v1/company", companyRouteHandler.GetCompany)
+	engine.PUT("api/v1/company/:id", companyRouteHandler.UpdateCompany)
+
 }
 
 func StartServer(lifecycle fx.Lifecycle, engine *gin.Engine) {
