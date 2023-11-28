@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/flexuxs/clubHubApp/src/domain/company/model"
+	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 )
 
 type ICompanyRepository interface {
@@ -12,5 +13,5 @@ type ICompanyRepository interface {
 }
 
 type ICompanyFinder interface {
-	Get(ctx context.Context, filterRequest *model.Filterrequest) ([]model.Company, error)
+	GetCompanyByFilter(ctx context.Context, filterRequest *model.Filterrequest) ([]infra_model.CompanyModel, error)
 }

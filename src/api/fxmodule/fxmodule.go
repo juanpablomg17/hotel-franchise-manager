@@ -2,17 +2,40 @@ package fxmodule
 
 import (
 	"github.com/flexuxs/clubHubApp/src/api"
+	"github.com/flexuxs/clubHubApp/src/api/config"
+	controller "github.com/flexuxs/clubHubApp/src/api/controller/company"
+	client_mongo "github.com/flexuxs/clubHubApp/src/api/fxmodule/client"
 	"github.com/flexuxs/clubHubApp/src/api/routes"
-	infrastructure "github.com/flexuxs/clubHubApp/src/infrastucture"
+	companyApplication "github.com/flexuxs/clubHubApp/src/application/usecase/company"
+	"github.com/flexuxs/clubHubApp/src/infrastucture/finder"
+	"github.com/flexuxs/clubHubApp/src/infrastucture/repository"
 	"go.uber.org/fx"
 )
 
 func NewApp() *fx.App {
 	return fx.New(
+		// config
+		fx.Provide(config.ProvideConfiguration),
+
+		// infrastructure
+		fx.Provide(client_mongo.NewHotelMongoClient),
+		fx.Provide(repository.NewCompanyRepository),
+		fx.Provide(finder.NewCompanyFinder),
+
+		// application
+		fx.Provide(companyApplication.NewCompanyUseCases),
+
+		// controller
+		fx.Provide(controller.NewController),
+
+		// api
 		fx.Provide(api.NewGinEngine),
-		fx.Provide(routes.NewUserService),
-		fx.Provide(infrastructure.NewUserRepository),
+		fx.Provide(routes.NewCompanyRoutes),
+
+		// register routes
 		fx.Invoke(api.RegisterRoutes),
+
+		// start server
 		fx.Invoke(api.StartServer),
 	)
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/flexuxs/clubHubApp/src/domain/company/model"
 	franchiseTypes "github.com/flexuxs/clubHubApp/src/domain/franchise/model"
 	locantionTypes "github.com/flexuxs/clubHubApp/src/domain/location/model"
+	infra_model "github.com/flexuxs/clubHubApp/src/infrastucture/model"
 	"github.com/google/uuid"
 )
 
@@ -55,4 +56,34 @@ func FromCompanyDtoToCompanyAggregate(companyDto *dto.CompanyDTO) model.CompanyA
 		Id:      uuid.New().String(),
 		Company: company,
 	}
+}
+
+func FromDomainCompanyToDatabaseModelArray(companies []model.Company) []infra_model.CompanyModel {
+	companyModels := []infra_model.CompanyModel{}
+
+	for _, company := range companies {
+		for _, franchise := range company.Franchises {
+			companyModel := &infra_model.CompanyModel{}
+
+			// Map Owner
+			companyModel.Id = company.Id
+			companyModel.Owner.FirstName = company.Owner.FirstName
+			companyModel.Owner.LastName = company.Owner.LastName
+			companyModel.Owner.Contact.Email = company.Owner.Contact.Email
+			companyModel.Owner.Contact.Phone = company.Owner.Contact.Phone
+
+			// Map Information
+			companyModel.Information.Name = company.Information.Name
+			companyModel.Information.TaxNumber = company.Information.TaxNumber
+
+			// Map Franchises
+			companyModel.Franchises = make([]infra_model.Franchise, len(company.Franchises))
+			companyModel.Franchises[0].Name = franchise.Name
+			companyModel.Franchises[0].URL = franchise.URL
+
+			companyModels = append(companyModels, *companyModel)
+		}
+	}
+
+	return companyModels
 }
